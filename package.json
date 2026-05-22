@@ -1,0 +1,173 @@
+{
+  "name": "code-pdf",
+  "displayName": "Code Pdf",
+  "description": "Transformez votre projet entier en PDF professionnel avec aperçu intégré",
+  "version": "1.0.0",
+  "publisher": "kojo-codeur",
+  "author": "kojo-codeur",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kojo-codeur/code-pdf"
+  },
+  "homepage": "https://github.com/kojo-codeur/code-pdf#readme",
+  "bugs": {
+    "url": "https://github.com/kojo-codeur/code-pdf/issues"
+  },
+  "keywords": [
+    "pdf",
+    "export",
+    "code",
+    "generator",
+    "documentation",
+    "syntax-highlighting"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onView:codePdf.codePdfView",
+    "onCommand:code-pdf.generateCodePdf"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-pdf.generateCodePdf",
+        "title": "Code PDF : Générer un PDF du code"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codePdf",
+          "title": "Code PDF",
+          "icon": "media/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "codePdf": [
+        {
+          "id": "codePdf.codePdfView",
+          "name": "Code PDF"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Code PDF",
+      "properties": {
+        "codePdf.title": {
+          "type": "string",
+          "default": "CODE PDF",
+          "description": "Titre du document"
+        },
+        "codePdf.authorName": {
+          "type": "string",
+          "default": "Votre Nom",
+          "description": "Nom de l'auteur"
+        },
+        "codePdf.authorEmail": {
+          "type": "string",
+          "default": "",
+          "description": "Email de l'auteur (optionnel)"
+        },
+        "codePdf.authorYouTube": {
+          "type": "string",
+          "default": "@kojo-codeur",
+          "description": "Identifiant YouTube (ex: @kojo-codeur)"
+        },
+        "codePdf.theme": {
+          "type": "string",
+          "enum": ["light", "dark"],
+          "default": "light",
+          "description": "Thème du PDF (clair ou sombre)"
+        },
+        "codePdf.fontSize": {
+          "type": "number",
+          "default": 12,
+          "description": "Taille de la police pour le code (px)"
+        },
+        "codePdf.fontFamilyCode": {
+          "type": "string",
+          "default": "Consolas, Monaco, 'Courier New', monospace",
+          "description": "Police monospace pour le code"
+        },
+        "codePdf.marginTop": {
+          "type": "string",
+          "default": "20mm",
+          "description": "Marge supérieure"
+        },
+        "codePdf.marginBottom": {
+          "type": "string",
+          "default": "20mm",
+          "description": "Marge inférieure"
+        },
+        "codePdf.marginLeft": {
+          "type": "string",
+          "default": "15mm",
+          "description": "Marge gauche"
+        },
+        "codePdf.marginRight": {
+          "type": "string",
+          "default": "15mm",
+          "description": "Marge droite"
+        },
+        "codePdf.logoPath": {
+          "type": "string",
+          "default": "media/icon.png",
+          "description": "Chemin relatif du logo (dans le dossier de l'extension)"
+        },
+        "codePdf.includePatterns": {
+          "type": "string",
+          "default": "**/*.{js,ts,py,html,css,php,java,cpp,go,rs,sh,json,md,png,jpg,jpeg,gif,svg,ico,webp}",
+          "description": "Glob patterns inclus (séparés par des virgules)"
+        },
+        "codePdf.excludePatterns": {
+          "type": "string",
+          "default": "node_modules,.git,dist,out,.vscode,.code-pdf,*.log,*.pdf",
+          "description": "Glob patterns exclus (séparés par des virgules)"
+        },
+        "codePdf.enableFileSelection": {
+          "type": "boolean",
+          "default": false,
+          "description": "Activer la sélection manuelle des fichiers"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.27.3",
+    "eslint": "^9.39.3",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "dependencies": {
+    "puppeteer": "^23.11.1"
+  }
+}
